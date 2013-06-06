@@ -125,7 +125,7 @@ class PhpCodeIntelAutoComplete(PhpCodeIntelBase, sublime_plugin.EventListener):
         pos = sel.end()
 
         # debugMsg(prefs, "scope_name="+str(view.scope_name(pos)))
-        if view.score_selector(locations[0], "source.php") == 0:
+        if view.score_selector(locations[0]-1, "source.php") == 0:
             debugMsg(prefs, "not in a source.php scope")
             return []
 
