@@ -64,8 +64,8 @@ class PCIPrefs:
 
         scan_dirs.extend(self.include_dirs)
 
-        print "scan_all_project_folders: "+str(self.scan_all_project_folders)
-        print "scan_dirs: "+str(scan_dirs)
+        # print "scan_all_project_folders: "+str(self.scan_all_project_folders)
+        # print "scan_dirs: "+str(scan_dirs)
 
         return scan_dirs
 
@@ -76,9 +76,9 @@ class PCIPrefs:
 
         if project_path == None:
             return None
-        
-        basedir,basename = os.path.split(project_path)
-        name = basename[:-16]+'-'+hashlib.md5(project_path).hexdigest()
+
+        basedir, basename = os.path.split(project_path)
+        name = basename[:-16]+'-'+hashlib.md5(project_path.encode('UTF-8')).hexdigest()
 
         return os.path.join(self.db_folder, name+'.sqlite3')
 
@@ -95,8 +95,7 @@ def get_project(view):
 def get_project_st3(view):
     # I think ST3 has a better way of doing this...
     #    implement that here
-
-    return get_project_st2(view)
+    return view.window().project_file_name()
 
 
 
