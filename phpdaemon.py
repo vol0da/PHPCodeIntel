@@ -2,7 +2,12 @@ import sublime
 import os
 import json
 import subprocess
-import thread
+
+try:
+    import thread
+except ImportError:
+    import _thread as thread
+
 import socket
 import time
 
@@ -52,7 +57,7 @@ def sendMessageToPHPDaemon(prefs, message, aSync=False):
         return
 
     netstring = str(len(message))+":"+message+","
-    sent = sock.send(netstring)
+    sent = sock.send(netstring.encode('UTF-8'))
 
     if aSync:
         thread.start_new_thread(processAsyncResponse, (prefs,sock))
@@ -79,7 +84,7 @@ def readDataFromSocket(sock):
         chunk = sock.recv(1024)
         if not chunk:
             break
-        data = data + chunk
+        data = data + chunk.decode('UTF-8')
 
     sock.close()
     return data
