@@ -32,7 +32,7 @@ def runLoop():
 def dispatch(force=False):
     dispatch_lock.acquire()
     try:
-        callbacks_to_run = q_callbacks.values()
+        callbacks_to_run = list(q_callbacks.values())
         q_callbacks.clear()
     finally:
         dispatch_lock.release()
@@ -54,7 +54,7 @@ def shutdownOldThreads():
 
             # release the semaphore so old threads can end
             thread.semaphore.release()
-            print "shutting down old thread..."
+            # print "shutting down old thread..."
             thread.join(None)
 
 
