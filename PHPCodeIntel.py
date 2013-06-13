@@ -7,9 +7,21 @@ import re
 import threading
 import time
 
-import PHPCodeIntel.threadq as threadq
-import PHPCodeIntel.preferences as preferences
-import PHPCodeIntel.phpdaemon as phpdaemon
+
+try:
+    import threadq
+except ImportError:
+    import PHPCodeIntel.threadq as threadq
+
+try:
+    import preferences
+except ImportError:
+    import PHPCodeIntel.preferences as preferences
+
+try:
+    import phpdaemon
+except ImportError:
+    import PHPCodeIntel.phpdaemon as phpdaemon
 
 st_version = 2
 if sublime.version() == '' or int(sublime.version()) > 3000:
